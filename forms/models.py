@@ -36,3 +36,33 @@ class SubmissionEntry(models.Model):
 
     def __str__(self):
         return f"SubmissionEntry{{submission={self.submission_id} {self.field}={self.value}}}"
+
+
+class FormRepository:
+    def get_by_id(self, form_id):
+        try:
+            Form.objects.get(pk=form_id)
+        except Form.DoesNottExist:
+            return None
+
+
+class SubmissionRepository:
+    def get_by_id(self, submission_id):
+        try:
+            Submission.objects.get(pk=submission_id)
+        except Form.DoesNottExist:
+            return None
+
+    def create(self, submission):
+        try:
+            form_model = Form.objects.get(pk=submission.form.id)
+        except Form.DoesNottExist:
+            return False
+
+        model = Submission()
+        form_model.submissions.add(model)
+
+        for field, value in submission.entries.items():
+            model.entries.add(SubmissionEntry(field=field, value=value))
+
+        return model
