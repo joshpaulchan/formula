@@ -6,3 +6,7 @@ from django.shortcuts import render
 
 def index(request):
     return HttpResponse("Hello")
+
+
+def submit_form(request, form_id):
+    return HttpResponse(form_id)
