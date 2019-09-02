@@ -3,7 +3,7 @@ from . import models, domain
 
 class FormMapper:
     @staticmethod
-    def from_model(self, form_model):
+    def from_model(form_model):
         return domain.Form(
             id=form_model.id, name=form_model.name, created_at=form_model.created_at
         )
@@ -11,7 +11,7 @@ class FormMapper:
 
 class SubmissionMapper:
     @staticmethod
-    def from_model(self, submission_model):
+    def from_model(submission_model):
         return domain.Submission(
             form=FormMapper.from_model(submission_model.form),
             entries={
