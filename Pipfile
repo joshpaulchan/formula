@@ -9,7 +9,7 @@ black = "*"
 
 [packages]
 django = "*"
-psycopg2 = "*"
+psycopg2 = "==2.7"
 
 [requires]
 python_version = "3.7"
