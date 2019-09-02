@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "now-django-example",
+    "name": "formula",
     "builds": [{
         "src": "formula/wsgi.py",
         "use": "@ardnt/now-python-wsgi",
@@ -11,5 +11,11 @@
     "routes": [{
         "src": "/(.*)",
         "dest": "formula/wsgi.py"
-    }]
+    }],
+    "env": {
+        "DB_USER": "formula-db-user",
+        "DB_PASSWORD": "formula-db-password",
+        "DB_NAME": "formula-db-name",
+        "DB_HOST": "formula-db-host"
+    }
 }
