@@ -1,5 +1,7 @@
 from django.db import models
 
+from . import mappers
+
 # Create your models here.
 
 
@@ -41,7 +43,7 @@ class SubmissionEntry(models.Model):
 class FormRepository:
     def get_by_id(self, form_id):
         try:
-            Form.objects.get(pk=form_id)
+            mappers.FormMapper.from_model(Form.objects.get(pk=form_id))
         except Form.DoesNottExist:
             return None
 
@@ -49,7 +51,9 @@ class FormRepository:
 class SubmissionRepository:
     def get_by_id(self, submission_id):
         try:
-            Submission.objects.get(pk=submission_id)
+            mappers.SubmissionMapper.from_model(
+                Submission.objects.get(pk=submission_id)
+            )
         except Form.DoesNottExist:
             return None
 
@@ -65,4 +69,4 @@ class SubmissionRepository:
         for field, value in submission.entries.items():
             model.entries.add(SubmissionEntry(field=field, value=value))
 
-        return model
+        return mappers.SubmissionMapper.from_model(model)
