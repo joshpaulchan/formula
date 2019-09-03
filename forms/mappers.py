@@ -22,3 +22,8 @@ class SubmissionMapper:
                 )
             },
         )
+
+    @staticmethod
+    def to_model(submission):
+        form_id = submission.form.id if submission.form else None
+        return models.Submission(form_id=form_id, created_at=submission.created_at)
