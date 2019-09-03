@@ -43,9 +43,10 @@ class SubmissionEntry(models.Model):
 class FormRepository:
     def get_by_id(self, form_id):
         try:
-            mappers.FormMapper.from_model(Form.objects.get(pk=form_id))
-        except Form.DoesNottExist:
+            model = Form.objects.get(pk=form_id)
+        except Form.DoesNotExist:
             return None
+        return mappers.FormMapper.from_model(model)
 
 
 class SubmissionRepository:
@@ -54,19 +55,20 @@ class SubmissionRepository:
             mappers.SubmissionMapper.from_model(
                 Submission.objects.get(pk=submission_id)
             )
-        except Form.DoesNottExist:
+        except Form.DoesNotExist:
             return None
 
     def create(self, submission):
         try:
             form_model = Form.objects.get(pk=submission.form.id)
-        except Form.DoesNottExist:
+        except Form.DoesNotExist:
             return False
 
-        model = Submission()
+        model = mappers.SubmissionMapper.to_model(submission)
+        model.save()
         form_model.submissions.add(model)
 
         for field, value in submission.entries.items():
-            model.entries.add(SubmissionEntry(field=field, value=value))
+            model.entries.create(field=field, value=value)
 
         return mappers.SubmissionMapper.from_model(model)
