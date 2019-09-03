@@ -7,12 +7,6 @@ from .models import FormRepository, SubmissionRepository
 from .usecases import SubmitFormUseCase, SubmissionIsNotFalsey
 
 # Create your views here.
-
-
-def index(request):
-    return HttpResponse("Hello")
-
-
 form_repository = FormRepository()
 submission_repository = SubmissionRepository()
 submission_validator = SubmissionIsNotFalsey()
