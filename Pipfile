@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 pytest = "*"
+black = "*"
 
 [packages]
 django = "*"
@@ -13,3 +14,6 @@ gunicorn = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
